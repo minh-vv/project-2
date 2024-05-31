@@ -24,10 +24,10 @@ public class BuildingAPI {
 	
 		
 	@GetMapping(value = "/api/buildings")
-	private  Object getBuildings(@RequestParam (name="name", required=false) String nameBuilding,
+	private  Object getBuildings(@RequestParam (name="name", required=false) String name,
 								@RequestParam(name="numberOfBasement",required=false) Long numberOfBasement) {
 		// DB
-		List<BuildingReponseDTO> results = buildingService.findAll(nameBuilding,numberOfBasement);
+		List<BuildingReponseDTO> results = buildingService.findAll(name,numberOfBasement);
 		return results;
 
 	}
