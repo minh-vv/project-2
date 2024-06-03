@@ -1,8 +1,8 @@
-package com.javaweb.beans;
+package com.javaweb.DTO;
 
 import java.util.List;
 
-public class ErrorResponseBean {
+public class ErrorResponseDTO {
 	private String error;
 	private List<String> detail;
 	public String getError() {
@@ -17,5 +17,4 @@ public class ErrorResponseBean {
 	public void setDetail(List<String> detail) {
 		this.detail = detail;
 	}
-	
 }

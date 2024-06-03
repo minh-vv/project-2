@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.javaweb.beans.ErrorResponseBean;
+import com.javaweb.DTO.ErrorResponseDTO;
 import com.javaweb.customexception.InvalidDataException;
 
 
@@ -18,7 +18,7 @@ public class controllerAdvisor extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(ArrayIndexOutOfBoundsException.class)
 	public ResponseEntity<Object> handleArrayIndexOutOfBoundsException(ArrayIndexOutOfBoundsException ex){
 		
-		ErrorResponseBean errorResponsBean = new ErrorResponseBean();
+		ErrorResponseDTO errorResponsBean = new ErrorResponseDTO();
 		errorResponsBean.setError(ex.getMessage());
 		List<String> details= new ArrayList<>();
 		details.add("Ban dang truy cap vao phan tu khong co trong mang");
@@ -30,7 +30,7 @@ public class controllerAdvisor extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(InvalidDataException.class)
 	public ResponseEntity<Object> handleInvalidDataException(InvalidDataException ex){
 			
-			ErrorResponseBean errorResponsBean = new ErrorResponseBean();
+			ErrorResponseDTO errorResponsBean = new ErrorResponseDTO();
 			errorResponsBean.setError(ex.getMessage());
 			List<String> details= new ArrayList<>();
 			details.add("Thieu Data");
