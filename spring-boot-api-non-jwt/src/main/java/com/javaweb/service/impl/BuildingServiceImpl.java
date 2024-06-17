@@ -12,7 +12,6 @@ import com.javaweb.repository.BuildingRepository;
 import com.javaweb.repository.DistrictRepository;
 import com.javaweb.repository.RentAreaRepository;
 import com.javaweb.repository.entity.BuildingEntity;
-import com.javaweb.repository.entity.RentAreaEntity;
 import com.javaweb.service.BuildingService;
 
 
@@ -29,9 +28,9 @@ public class BuildingServiceImpl implements BuildingService{
 		List<BuildingReponseDTO>  results = new ArrayList<BuildingReponseDTO>();
 		
 		List<BuildingEntity> buildingEntities = buildingRepository.findAll(params,typeCode);
-		List <RentAreaEntity> rentAreaEntities;
+		//List <RentAreaEntity> rentAreaEntities = new ArrayList<RentAreaEntity>();
 		
-		for(BuildingEntity it: buildingEntities) {
+ 		for(BuildingEntity it: buildingEntities) {
 			
 			BuildingReponseDTO buildingReponseDTO = new BuildingReponseDTO();
 
@@ -46,15 +45,7 @@ public class BuildingServiceImpl implements BuildingService{
 			buildingReponseDTO.setFloorArea(it.getFloorArea());
 			buildingReponseDTO.setEmptyArea(null);
 			
-			rentAreaEntities = rentAreaRepository.findRentArea(it.getId());
-			String rentArea ="";
-			for(RentAreaEntity ra: rentAreaEntities) {
-				rentArea += ra.getValue().toString() ;
-				rentArea += ",";
-			}
-			rentArea = rentArea.substring(0,rentArea.length()-1);
-			
-			buildingReponseDTO.setRentArea(rentArea);
+			buildingReponseDTO.setRentArea(String.join(",", rentAreaRepository.findRentArea(it.getId())));
 			
 			buildingReponseDTO.setRentPrice(it.getRentPrice());
 			
@@ -62,9 +53,7 @@ public class BuildingServiceImpl implements BuildingService{
 			
 			results.add(buildingReponseDTO);
 		}
-		
-		
-		return results;
+        return results;
 	}
 
 }

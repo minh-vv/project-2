@@ -1,15 +1,14 @@
 package com.javaweb.repository.impl;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.stereotype.Repository;
 
-import com.javaweb.repository.DatabaseConfig;
 import com.javaweb.repository.DistrictRepository;
 import com.javaweb.repository.entity.DistrictEntity;
+import com.javaweb.utils.ConnectionUtil;
 
 @Repository
 public class DistrictRepositoryImpl implements DistrictRepository {
@@ -19,7 +18,7 @@ public class DistrictRepositoryImpl implements DistrictRepository {
         String sql = "SELECT * FROM district WHERE id = " + districtId.toString();
         System.out.println(sql);
 
-        try (Connection conn = DriverManager.getConnection(DatabaseConfig.DB_URL, DatabaseConfig.USER, DatabaseConfig.PASS);
+        try (Connection conn = ConnectionUtil.getConnection();
              java.sql.Statement stm = conn.createStatement();
              ResultSet rs = stm.executeQuery(sql)) {
 
