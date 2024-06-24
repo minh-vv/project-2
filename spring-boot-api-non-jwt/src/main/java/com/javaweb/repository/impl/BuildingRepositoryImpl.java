@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Repository;
 
@@ -123,6 +124,12 @@ public class BuildingRepositoryImpl implements BuildingRepository {
 		        code.add("'" + it + "'");
 		    }
 		    where.append(" and rt.code in (" + String.join(",", code) + ") \n");
+		}
+		// java 8 
+		if (typeCode != null && !typeCode.isEmpty()) {
+			where.append(" and (");
+			where.append(typeCode.stream().map(item -> " rt.code like '%" + item +"%'").collect(Collectors.joining(" or ")));
+			where.append(") ");
 		}
 
 	}

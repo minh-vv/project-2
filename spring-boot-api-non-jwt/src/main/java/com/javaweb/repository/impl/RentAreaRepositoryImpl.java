@@ -9,13 +9,14 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.javaweb.repository.RentAreaRepository;
+import com.javaweb.repository.entity.RentAreaEntity;
 import com.javaweb.utils.ConnectionUtil;
 
 @Repository
 public class RentAreaRepositoryImpl implements RentAreaRepository {
-	public List <String> findRentArea(Long buildingId){
+	public List <RentAreaEntity> findRentArea(Long buildingId){
 		
-		List<String> rentAreas = new ArrayList<String>();
+		List<RentAreaEntity> rentAreas = new ArrayList<RentAreaEntity>();
 		
 		String sql = " SELECT * from rentarea where buildingId = " + buildingId.toString();
 	
@@ -26,8 +27,12 @@ public class RentAreaRepositoryImpl implements RentAreaRepository {
 	    		  ResultSet rs = stm.executeQuery(sql);){
 			
 			while (rs.next()) {
-				Long value = rs.getLong("value");
-				rentAreas.add(value.toString());
+				RentAreaEntity rentAreaEntity = new RentAreaEntity();
+				rentAreaEntity.setId(rs.getLong("id"));
+				rentAreaEntity.setBuildingId(rs.getLong("buildingid"));
+				rentAreaEntity.setValue(rs.getLong("value"));
+	
+				rentAreas.add(rentAreaEntity);
 			}
 			
 			

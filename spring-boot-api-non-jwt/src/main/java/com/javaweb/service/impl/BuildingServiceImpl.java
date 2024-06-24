@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.javaweb.DTO.response.BuildingReponseDTO;
+import com.javaweb.converter.BuildingConverter;
 import com.javaweb.repository.BuildingRepository;
 import com.javaweb.repository.DistrictRepository;
 import com.javaweb.repository.RentAreaRepository;
@@ -23,6 +24,9 @@ public class BuildingServiceImpl implements BuildingService{
 	private DistrictRepository districtRepository;
 	@Autowired
 	private RentAreaRepository rentAreaRepository;
+	@Autowired
+	private BuildingConverter buidingConverter;
+	
 	@Override
 	public List<BuildingReponseDTO> findAll(Map<Object,Object> params, List<String> typeCode) {
 		List<BuildingReponseDTO>  results = new ArrayList<BuildingReponseDTO>();
@@ -32,25 +36,7 @@ public class BuildingServiceImpl implements BuildingService{
 		
  		for(BuildingEntity it: buildingEntities) {
 			
-			BuildingReponseDTO buildingReponseDTO = new BuildingReponseDTO();
-
-			buildingReponseDTO.setName(it.getName());
-			buildingReponseDTO.setAddress(it.getStreet()+ "," + it.getWard()+ "," + districtRepository.findDistrict(it.getDistrictId()).getName());
-			
-			buildingReponseDTO.setNumberOfBasement(it.getNumberOfBasement());
-			
-			buildingReponseDTO.setManagerName(it.getManagerName());
-			buildingReponseDTO.setManagerPhoneNumber(it.getManagerPhoneNumber());
-			
-			buildingReponseDTO.setFloorArea(it.getFloorArea());
-			buildingReponseDTO.setEmptyArea(null);
-			
-			buildingReponseDTO.setRentArea(String.join(",", rentAreaRepository.findRentArea(it.getId())));
-			
-			buildingReponseDTO.setRentPrice(it.getRentPrice());
-			
-			buildingReponseDTO.setBrokerageFees(null);
-			
+			BuildingReponseDTO buildingReponseDTO = buidingConverter.toBuildingReponseDTO(it) ;
 			results.add(buildingReponseDTO);
 		}
         return results;
