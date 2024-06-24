@@ -3,9 +3,8 @@ package com.javaweb.converter;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import com.javaweb.DTO.response.BuildingReponseDTO;
 import com.javaweb.repository.DistrictRepository;
