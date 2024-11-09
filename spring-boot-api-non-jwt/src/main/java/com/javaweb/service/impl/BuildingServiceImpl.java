@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.javaweb.DTO.response.BuildingReponseDTO;
+import com.javaweb.builder.BuildingSearchBuilder;
 import com.javaweb.converter.BuildingConverter;
+import com.javaweb.converter.BuildingSearchBuilderConverter;
 import com.javaweb.repository.BuildingRepository;
-import com.javaweb.repository.DistrictRepository;
-import com.javaweb.repository.RentAreaRepository;
 import com.javaweb.repository.entity.BuildingEntity;
 import com.javaweb.service.BuildingService;
 
@@ -20,22 +20,22 @@ import com.javaweb.service.BuildingService;
 public class BuildingServiceImpl implements BuildingService{
 	@Autowired
 	private BuildingRepository buildingRepository;
-	@Autowired
-	private DistrictRepository districtRepository;
-	@Autowired
-	private RentAreaRepository rentAreaRepository;
+
 	@Autowired
 	private BuildingConverter buidingConverter;
 	
+	@Autowired
+	private BuildingSearchBuilderConverter buildingSearchBuilderConverter;
+	
 	@Override
 	public List<BuildingReponseDTO> findAll(Map<Object,Object> params, List<String> typeCode) {
-		List<BuildingReponseDTO>  results = new ArrayList<BuildingReponseDTO>();
 		
-		List<BuildingEntity> buildingEntities = buildingRepository.findAll(params,typeCode);
-		//List <RentAreaEntity> rentAreaEntities = new ArrayList<RentAreaEntity>();
+		//chuyen data gui ve qua builder pattern	
+		BuildingSearchBuilder builder = buildingSearchBuilderConverter.toBuildingSearchBuilder(params, typeCode);
+		List<BuildingReponseDTO>  results = new ArrayList<BuildingReponseDTO>();
+		List<BuildingEntity> buildingEntities = buildingRepository.findAll(builder);
 		
  		for(BuildingEntity it: buildingEntities) {
-			
 			BuildingReponseDTO buildingReponseDTO = buidingConverter.toBuildingReponseDTO(it) ;
 			results.add(buildingReponseDTO);
 		}

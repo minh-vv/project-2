@@ -1,22 +1,58 @@
 package com.javaweb.repository.entity;
 
-public class BuildingEntity {
-	private Long id;
-	private String name;
-	
-	private String ward;
-	private String street;
-	private Long districtId;
-	
-	private Long numberOfBasement;
-	
-	private String managerName;
-	private String managerPhoneNumber;
-	
-	private Long floorArea;
-	
-	private Long rentPrice;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "building")
+public class BuildingEntity {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@Column(name = "name")
+	private String name;	
+	
+	@Column(name = "ward")
+	private String ward;
+	
+	@Column(name = "street")
+	private String street;
+	
+//	@Column(name = "districtid")
+//	private Long districtId;
+	@ManyToOne
+	@JoinColumn(name = "districtid")
+	private DistrictEntity district;
+	
+	@OneToMany(mappedBy = "buildingEntity", fetch = FetchType.LAZY)
+	private List<RentAreaEntity> rentAreas = new ArrayList<RentAreaEntity>();
+	
+	@Column(name = "numberofbasement")
+	private Long numberOfBasement;
+
+	@Column(name = "managername")
+	private String managerName;
+
+	@Column(name = "managerphonenumber")
+	private String managerPhoneNumber;
+
+	@Column(name = "floorarea")
+	private Long floorArea;
+
+	@Column(name = "rentprice")
+	private Long rentPrice;
 	
 	public Long getId() {
 		return id;
@@ -48,14 +84,6 @@ public class BuildingEntity {
 
 	public void setStreet(String street) {
 		this.street = street;
-	}
-
-	public Long getDistrictId() {
-		return districtId;
-	}
-
-	public void setDistrictId(Long districtId) {
-		this.districtId = districtId;
 	}
 
 	public Long getNumberOfBasement() {
@@ -96,6 +124,22 @@ public class BuildingEntity {
 
 	public void setRentPrice(Long rentPrice) {
 		this.rentPrice = rentPrice;
+	}
+
+	public DistrictEntity getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(DistrictEntity district) {
+		this.district = district;
+	}
+
+	public List<RentAreaEntity> getRentAreas() {
+		return rentAreas;
+	}
+
+	public void setRentAreas(List<RentAreaEntity> rentAreas) {
+		this.rentAreas = rentAreas;
 	}
 	
 	

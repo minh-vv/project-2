@@ -18,7 +18,7 @@ public class BuildingSearchBuilder {
 	private Long rentAreaFrom;
 	private Long rentAreaTo;
 	private Long staffId;
-	
+	private Long level;
 	
 	public BuildingSearchBuilder(Builder builder) {
 		this.name = builder.name;
@@ -35,7 +35,7 @@ public class BuildingSearchBuilder {
 		this.rentAreaFrom = builder.rentAreaFrom;
 		this.rentAreaTo = builder.rentAreaTo;
 		this.staffId = builder.staffId;
-		
+		this.level = builder.level;
 		
 	}
 
@@ -82,6 +82,11 @@ public class BuildingSearchBuilder {
 		return staffId;
 	}
 	
+	public Long getLevel() {
+		return level;
+	}
+
+
 	public static class Builder{
 		private String name;
 		private Long floorArea;
@@ -97,7 +102,8 @@ public class BuildingSearchBuilder {
 		private Long rentAreaFrom;
 		private Long rentAreaTo;
 		private Long staffId;
-		
+		private Long level;
+
 		public Builder setName(String name) {
 		    this.name = name;
 		    return this;
@@ -167,10 +173,17 @@ public class BuildingSearchBuilder {
 		    this.staffId = staffId;
 		    return this;
 		}
+		
+		public Builder setLevel(Long level) {
+		    this.level = level;
+		    return this;
+		}
+		
 
 		public BuildingSearchBuilder build() {
 			return new BuildingSearchBuilder(this);
 		}
+	
 		
 	}
 	

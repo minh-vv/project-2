@@ -35,7 +35,6 @@ public class controllerAdvisor extends ResponseEntityExceptionHandler {
 			List<String> details= new ArrayList<>();
 			details.add("Thieu Data");
 			errorResponsBean.setDetail(details);
-			
 			return new ResponseEntity<>(errorResponsBean, HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	
